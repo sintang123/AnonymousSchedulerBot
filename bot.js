@@ -16,6 +16,9 @@ var memberIDList = [];
 var memberNameList = [];
 var webHookList = [];
 
+var alternativesList = [];
+var requesterId = "";
+
 var yesCount = 0;
 var noCount = 0;
 
@@ -47,10 +50,10 @@ controller.setupWebserver(process.env.PORT || 3000, function (err, webserver) {
     });
 });
 
-controller.hears('hi', 'direct_message,direct_mention', function (bot, message) {
+controller.hears('^hi', 'direct_message,direct_mention', function (bot, message) {
     console.log(message);
 
-    bot.reply(message, 'Welcome! \n\n I am Anonymous Scheduler Bot. I can help you to get a sensing of how much your team is available for an upcoming activity that you might have in mind. \n\n My commands are simple to use, only **1** is needed to get immediately start gathering feedback.\n\n- @myname -start');
+    bot.reply(message, 'Welcome! \n\n I am Anonymous Scheduler Bot. I can help you to get a sensing of how much your team is available for an upcoming activity that you might have in mind. \n\n My commands are simple to use, only **1** command is needed to get immediately start gathering feedback.\n\n- @myname -start [activity_details]');
 
 });
 
@@ -61,7 +64,10 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
     //var toJson = JSON.parse(message);
     var rp = require('request-promise');
 
-    activity = message.text.substr(message.text.indexOf(" ") + 1);
+    requesterId = message.raw_message.data.personId;;
+
+    activityDetails = message.text.substr(message.text.indexOf(" ") + 1);
+
     spaceId = message.raw_message.data.roomId;
 
     // Get Room Participants ID
@@ -92,14 +98,14 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
                 // Sending Personal Messages
                 console.log("Sending votes..");
 
-                var options3 = { method: 'POST',
+               var options3 = { method: 'POST',
                     url: 'https://api.ciscospark.com/v1/messages',
                     headers: 
                      { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
                       'Cache-Control': 'no-cache',
                        Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
                       'Content-type': 'application/json; charset=utf-8' },
-                      body: '{\n\t"toPersonId": "' + member.personId + '",\n\t"text": "Vote in Progress. Please enter -yes or -no"\n}' };
+                      body: '{\n\t"toPersonId": "' + member.personId + '",\n\t"text": "Vote in Progress. \\n \\n' + activityDetails + ' \\n\\nPlease enter -yes or -no [suggestions?] "\n}' };
                       console.log(options);
                 rp(options3)
                 .then(function (parsedBody){
@@ -120,6 +126,8 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
             console.log(err);
         });
 });
+
+
 
 
 function createWebHooks(){
@@ -154,9 +162,10 @@ function createWebHooks(){
 
 
 
-controller.hears('-yes', ['direct_message','direct_mention','mention'], function (bot, message) {
+controller.hears('-yes *', ['direct_message','direct_mention','mention'], function (bot, message) {
     //var toJson = JSON.parse(message);
     var rp = require('request-promise');
+
 
     var tempId = message.raw_message.data.personId;
     var index = memberIDList.indexOf(tempId);
@@ -185,8 +194,16 @@ controller.hears('-yes', ['direct_message','direct_mention','mention'], function
 
 });
 
-controller.hears('-no', ['direct_message','direct_mention','mention'], function (bot, message) {
+controller.hears('-no *', ['direct_message','direct_mention','mention'], function (bot, message) {
     //var toJson = JSON.parse(message);
+    //var rp = require('request-promise');
+
+   var alternatives = message.text.substr(message.text.indexOf(" ") + 1);
+    console.log("ALT : " + alternatives);
+   if (alternatives.length > 1 && alternatives != '-no'){
+      alternativesList.push(alternatives);
+    }
+
     var rp = require('request-promise');
 
     var tempId = message.raw_message.data.personId;
@@ -200,7 +217,7 @@ controller.hears('-no', ['direct_message','direct_mention','mention'], function 
     headers: 
      { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
        'Cache-Control': 'no-cache',
-       Authorization: 'Bearer Yzg2MjhkYmQtZ jdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
+       Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
       'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
@@ -258,7 +275,43 @@ function checkVotingStatus(){
           rp(options3)
             .then(function (parsedBody){
                
-               console.log("Vote completed. " +  Math.round((yesCount/curCount)*100) + "% says YES");
+               console.log("No: Feedback : " + alternativesList.length);
+
+               
+               // Inform Requester of any Suggestion
+
+               var feedback = "";
+               if (alternativesList.length > 0){
+                feedback = "Vote have ended. Here are the feedback received from your team.\\n\\n";
+                  for (var h = 0 ; h < alternativesList.length; h++){
+                   feedback = feedback + alternativesList[h] + " \\n ";
+
+                 }
+                 console.log(feedback);
+              }else{
+                 feedback = "Vote have ended. No feedback received from your team.\\n";
+
+              }
+               
+
+              var options4 = { method: 'POST',
+                      url: 'https://api.ciscospark.com/v1/messages',
+                      headers: 
+                       { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
+                        'Cache-Control': 'no-cache',
+                         Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
+                        'Content-type': 'application/json; charset=utf-8' },
+                        body: '{\n\t"toPersonId": "' + requesterId + '",\n\t"text": "' + feedback + '"\n}' };
+
+                rp(options4)
+                  .then(function (parsedBody){
+                     
+                     console.log((memberIDList.length - curCount) + " votes left.")
+
+                  }).catch(function (err){
+                      console.log(err);
+                  });
+
 
                // Clearing variables
                 activity = "";
@@ -266,6 +319,8 @@ function checkVotingStatus(){
                 memberIDList = [];
                 memberNameList = [];
                 webHookList = [];
+                alternativesList = [] 
+                requesterId = "";
 
                 yesCount = 0;
                 noCount = 0;
@@ -273,6 +328,11 @@ function checkVotingStatus(){
             }).catch(function (err){
                 console.log(err);
             });
+
+
+        
+
+            
 
     }
 
@@ -337,6 +397,8 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
     memberIDList = [];
     memberNameList = [];
     webHookList = [];
+    alternativesList = [] 
+    requesterId = "";
 
     yesCount = 0;
     noCount = 0;
