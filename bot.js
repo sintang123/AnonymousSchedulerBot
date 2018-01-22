@@ -83,7 +83,7 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
 
              var member = tempJson.items[i];
 
-             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2){
+             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && (member.personEmail.indexOf("sparkbot.io") == -1)){
                 memberIDList.push(member.personId);
                 memberNameList.push(member.personDisplayName);
                 console.log("Person ID " + (i+1) + " : " + member.personId);
@@ -200,7 +200,7 @@ controller.hears('-no', ['direct_message','direct_mention','mention'], function 
     headers: 
      { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
        'Cache-Control': 'no-cache',
-       Authorization: 'Bearer Yzg2MjhkYmQtZ	jdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
+       Authorization: 'Bearer Yzg2MjhkYmQtZ jdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
       'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
@@ -250,7 +250,7 @@ function checkVotingStatus(){
               'Cache-Control': 'no-cache',
                Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + Math.round((yesCount/curCount)*100) + '% says YES!"\n}' };
+              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + '% says YES!"\n}' };
 
 
 
@@ -308,7 +308,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
     if (curCount == 0 ){
         text = "Voting have stopped. I'm sorry, your team is busy and have not responded yet.";
     }else{
-        text = "Voting have stopped. " + curCount + " of your team members have responded and " + Math.round((yesCount/curCount)*100) + "% have said YES!";
+        text = "Voting have stopped. " + curCount + " of your team members have responded and " + yesCount + " have said YES!";
     }
 
 
