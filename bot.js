@@ -135,7 +135,7 @@ function createWebHooks(){
               'Cache-Control': 'no-cache',
               Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://singsing.localtunnel.me",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
+              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://sybot.herokuapp.com",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
     
     console.log(options2);
     rp(options2)
@@ -200,7 +200,7 @@ controller.hears('-no', ['direct_message','direct_mention','mention'], function 
     headers: 
      { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
        'Cache-Control': 'no-cache',
-       Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
+       Authorization: 'Bearer Yzg2MjhkYmQtZ	jdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
       'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
