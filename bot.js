@@ -250,7 +250,7 @@ function checkVotingStatus(){
               'Cache-Control': 'no-cache',
                Authorization: 'Bearer Yzg2MjhkYmQtZjdiOC00ZWE3LWFjMTAtZjc2NWVmZjA0OTg4NzE3ZDlhNmEtN2Vh',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + '% says YES!"\n}' };
+              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + ' says YES!"\n}' };
 
 
 
