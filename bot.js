@@ -1,6 +1,8 @@
-// import { error } from 'util';
 
-// var Botkit = require('./lib/Botkit.js');
+// Author : Tang Sing Yuen
+// Date   : 22 Jan 2018
+// Bot    : Anonymous Scheduler Bot
+
 var Botkit = require('botkit');
 
 //const https = require('https');
