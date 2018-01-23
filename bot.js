@@ -14,6 +14,8 @@ env(__dirname + '/.env');
 // Appliacation Specific Variables
 var activity = "";
 var spaceId = "";
+
+
 var memberIDList = [];
 var memberNameList = [];
 var webHookList = [];
@@ -91,7 +93,7 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
 
              var member = tempJson.items[i];
 
-             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && (member.personEmail.indexOf("sparkbot.io") == -1)){
+             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && member.personId != requesterId && (member.personEmail.indexOf("sparkbot.io") == -1)){
                 memberIDList.push(member.personId);
                 memberNameList.push(member.personDisplayName);
                 console.log("Person ID " + (i+1) + " : " + member.personId);
@@ -286,7 +288,7 @@ function checkVotingStatus(){
                if (alternativesList.length > 0){
                 feedback = "Vote have ended. Here are the feedback received from your team.\\n\\n";
                   for (var h = 0 ; h < alternativesList.length; h++){
-                   feedback = feedback + alternativesList[h] + " \\n ";
+                   feedback = feedback + "Feedback " + (h + 1) + " :\\n" + alternativesList[h] + " \\n ";
 
                  }
                  console.log(feedback);
