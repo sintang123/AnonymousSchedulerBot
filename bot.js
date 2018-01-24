@@ -297,7 +297,7 @@ function checkVotingStatus(forcedQuit){
                if (alternativesList.length > 0){
                 feedback = "Vote have ended. Here are the feedback received from your team.\\n\\n";
                   for (var h = 0 ; h < alternativesList.length; h++){
-                   feedback = feedback + "Feedback " + (h + 1) + " :\\n" + alternativesList[h] + " \\n ";
+                   feedback = feedback + "Feedback " + (h + 1) + " :\\n" + alternativesList[h] + " \\n \\n";
 
                  }
                  console.log(feedback);
