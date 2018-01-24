@@ -92,9 +92,9 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
            for (var i = 0; i < tempJson.items.length; i++) {
 
              var member = tempJson.items[i];
-             //if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && member.personId != requesterId && (member.personEmail.indexOf("sparkbot.io") == -1)){
+             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && member.personId != requesterId && (member.personEmail.indexOf("sparkbot.io") == -1)){
              
-             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 &&  (member.personEmail.indexOf("sparkbot.io") == -1)){
+             //if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 &&  (member.personEmail.indexOf("sparkbot.io") == -1)){
                 memberIDList.push(member.personId);
                 memberNameList.push(member.personDisplayName);
                 console.log("Person ID " + (i+1) + " : " + member.personId);
