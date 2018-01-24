@@ -148,7 +148,7 @@ function createWebHooks(){
               'Cache-Control': 'no-cache',
               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://yuenyuen.localtunnel.me",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
+              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://sybot.herokuapp.com/",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
     
     console.log(options2);
     rp(options2)
