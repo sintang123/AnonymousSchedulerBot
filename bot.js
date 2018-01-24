@@ -312,6 +312,7 @@ function checkVotingStatus(){
                      
                      console.log((memberIDList.length - curCount) + " votes left.")
 
+
                   }).catch(function (err){
                       console.log(err);
                   });
@@ -389,7 +390,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
         console.log(options3);
       rp(options3)
         .then(function (parsedBody){
-           
+           checkVotingStatus();
 
         }).catch(function (err){
             console.log(err);
