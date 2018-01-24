@@ -92,8 +92,9 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
            for (var i = 0; i < tempJson.items.length; i++) {
 
              var member = tempJson.items[i];
-
-             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && member.personId != requesterId && (member.personEmail.indexOf("sparkbot.io") == -1)){
+             //if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 && member.personId != requesterId && (member.personEmail.indexOf("sparkbot.io") == -1)){
+             
+             if (member.personEmail != bannedEmail1 && member.personEmail != bannedEmail2 &&  (member.personEmail.indexOf("sparkbot.io") == -1)){
                 memberIDList.push(member.personId);
                 memberNameList.push(member.personDisplayName);
                 console.log("Person ID " + (i+1) + " : " + member.personId);
@@ -147,7 +148,7 @@ function createWebHooks(){
               'Cache-Control': 'no-cache',
               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://sybot.herokuapp.com",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
+              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://yuenyuen.localtunnel.me",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
     
     console.log(options2);
     rp(options2)
@@ -190,7 +191,11 @@ controller.hears('-yes *', ['direct_message','direct_mention','mention'], functi
            yesCount  = yesCount + 1;
            console.log(memberNameList[index] + "'s Webhook deleted");
 
-           checkVotingStatus();
+           if((memberIDList.length - (yesCount + noCount)) > 0){
+             checkVotingStatus(false);
+           }else{
+              checkVotingStatus(true);
+           }
 
         }).catch(function (err){
             console.log(err);
@@ -229,7 +234,11 @@ controller.hears('-no *', ['direct_message','direct_mention','mention'], functio
            noCount  = noCount + 1;
            console.log(memberNameList[index] + "'s Webhook deleted");
 
-           checkVotingStatus();
+           if((memberIDList.length - (yesCount + noCount)) > 0){
+             checkVotingStatus(false);
+           }else{
+              checkVotingStatus(true);
+           }
 
         }).catch(function (err){
             console.log(err);
@@ -237,14 +246,14 @@ controller.hears('-no *', ['direct_message','direct_mention','mention'], functio
 
 });
 
-function checkVotingStatus(){
+function checkVotingStatus(forcedQuit){
 
     console.log("Checking Voting Status..");
     var rp = require('request-promise');
     var curCount = yesCount + noCount;
 
     
-    if((memberIDList.length - curCount) > 0){
+    if((memberIDList.length - curCount) > 0 || forcedQuit == false){
         var options3 = { method: 'POST',
             url: 'https://api.ciscospark.com/v1/messages',
             headers: 
@@ -310,12 +319,37 @@ function checkVotingStatus(){
                 rp(options4)
                   .then(function (parsedBody){
                      
-                     console.log((memberIDList.length - curCount) + " votes left.")
+                       console.log("Deleting Existing Webhooks..");
+                        for(var z = 0; z < webHookList.length; z++){
+                            
+                            console.log("Deleting Webhook..");
+                            var options = { method: 'DELETE',
+                            url: 'https://api.ciscospark.com/v1/webhooks/' + webHookList[z],
+                            headers: 
+                             { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
+                               'Cache-Control': 'no-cache',
+                               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                              'Content-type': 'application/json; charset=utf-8' } };
+
+                            rp(options)
+                                .then(function (parsedBody){
+                                  console.log(webHookList.length +  " Webhook remaining..");
+                                }).catch(function (err){
+                                    console.log(err);
+                                });
+
+                        }
+                    
 
 
                   }).catch(function (err){
                       console.log(err);
                   });
+
+
+
+
+
 
 
                // Clearing variables
@@ -346,26 +380,9 @@ function checkVotingStatus(){
 
 controller.hears('-quit', ['direct_message','direct_mention','mention'], function (bot, message) {
     var rp = require('request-promise');
-    console.log("Deleting Existing Webhooks..");
-    for(var z = 0; z < webHookList.length; z++){
-        
-        console.log("Deleting " + memberNameList[z] + "'s Webhook..");
-        var options = { method: 'DELETE',
-        url: 'https://api.ciscospark.com/v1/webhooks/' + webHookList[z],
-        headers: 
-         { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
-           'Cache-Control': 'no-cache',
-           Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
-          'Content-type': 'application/json; charset=utf-8' } };
-
-        rp(options)
-            .then(function (parsedBody){
-              console.log(webHookList.length +  " Webhook remaining..");
-            }).catch(function (err){
-                console.log(err);
-            });
-
-    }
+    var myId = requesterId;
+    //curCount = memberIDList.length;
+    //checkVotingStatus(true);
 
     var curCount = yesCount + noCount;
     var text  = "";
@@ -387,10 +404,69 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
           body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "' + text + '"\n}'
           
          };
-        console.log(options3);
+        
       rp(options3)
         .then(function (parsedBody){
-           checkVotingStatus();
+              console.log("HEYHEY : " + myId);
+
+            // Inform Requester of any Suggestion
+
+               var feedback = "";
+               if (alternativesList.length > 0){
+                feedback = "Vote have ended. Here are the feedback received from your team.\\n\\n";
+                  for (var h = 0 ; h < alternativesList.length; h++){
+                   feedback = feedback + "Feedback " + (h + 1) + " :\\n" + alternativesList[h] + " \\n \\n ";
+
+                 }
+                 console.log(feedback);
+              }else{
+                 feedback = "Vote have ended. No feedback received from your team.\\n";
+
+              }
+               
+
+              var options4 = { method: 'POST',
+                      url: 'https://api.ciscospark.com/v1/messages',
+                      headers: 
+                       { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
+                        'Cache-Control': 'no-cache',
+                         Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                        'Content-type': 'application/json; charset=utf-8' },
+                        body: '{\n\t"toPersonId": "' + myId + '" ,\n\t"text": "' + feedback + '"\n}' };
+
+
+              console.log("HeyHEY : " + options4.headers.body);
+                rp(options4)
+                  .then(function (parsedBody){
+                     
+                     
+                       console.log("Deleting Existing Webhooks..");
+                        for(var z = 0; z < webHookList.length; z++){
+                            
+                            console.log("Deleting Webhook..");
+                            var options0 = { method: 'DELETE',
+                            url: 'https://api.ciscospark.com/v1/webhooks/' + webHookList[z],
+                            headers: 
+                             { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
+                               'Cache-Control': 'no-cache',
+                               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                              'Content-type': 'application/json; charset=utf-8' } };
+
+                            rp(options0)
+                                .then(function (parsedBody){
+                                  console.log(webHookList.length +  " Webhook remaining..");
+                                }).catch(function (err){
+                                    console.log(err);
+                                });
+
+                        }
+                    
+
+
+                  }).catch(function (err){
+                      console.log(err);
+                  });
+
 
         }).catch(function (err){
             console.log(err);
