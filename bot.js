@@ -82,7 +82,7 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
       headers: 
       { 'Postman-Token': 'b20053e4-6114-8415-f8bb-30f09dc1ef30',
         'Cache-Control': 'no-cache',
-        Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+        Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
         'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
@@ -108,7 +108,7 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
                     headers: 
                      { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
                       'Cache-Control': 'no-cache',
-                       Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                       Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                       'Content-type': 'application/json; charset=utf-8' },
                       body: '{\n\t"toPersonId": "' + member.personId + '",\n\t"text": "Vote in Progress. \\n \\n' + activityDetails + ' \\n\\nPlease enter -yes or -no [suggestions?] "\n}' };
                       console.log(options);
@@ -146,7 +146,7 @@ function createWebHooks(){
         headers: 
             { 'Postman-Token': '537c81a5-e5b2-3da2-d03d-1e4d5013b5fc',
               'Cache-Control': 'no-cache',
-              Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+              Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
               'Content-type': 'application/json; charset=utf-8' },
               body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://sybot.herokuapp.com/",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
     
@@ -183,7 +183,7 @@ controller.hears('-yes *', ['direct_message','direct_mention','mention'], functi
     headers: 
      { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
        'Cache-Control': 'no-cache',
-       Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+       Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
       'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
@@ -226,7 +226,7 @@ controller.hears('-no *', ['direct_message','direct_mention','mention'], functio
     headers: 
      { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
        'Cache-Control': 'no-cache',
-       Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+       Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
       'Content-type': 'application/json; charset=utf-8' } };
 
     rp(options)
@@ -259,7 +259,7 @@ function checkVotingStatus(forcedQuit){
             headers: 
              { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
               'Cache-Control': 'no-cache',
-               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+               Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
               'Content-type': 'application/json; charset=utf-8' },
               body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "' + (memberIDList.length - curCount) + ' responses remaining"\n}' };
 
@@ -278,7 +278,7 @@ function checkVotingStatus(forcedQuit){
             headers: 
              { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
               'Cache-Control': 'no-cache',
-               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+               Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
               'Content-type': 'application/json; charset=utf-8' },
               body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + ' says YES!"\n}' };
 
@@ -312,7 +312,7 @@ function checkVotingStatus(forcedQuit){
                       headers: 
                        { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
                         'Cache-Control': 'no-cache',
-                         Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                         Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                         'Content-type': 'application/json; charset=utf-8' },
                         body: '{\n\t"toPersonId": "' + requesterId + '",\n\t"text": "' + feedback + '"\n}' };
 
@@ -328,7 +328,7 @@ function checkVotingStatus(forcedQuit){
                             headers: 
                              { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
                                'Cache-Control': 'no-cache',
-                               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                               Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                               'Content-type': 'application/json; charset=utf-8' } };
 
                             rp(options)
@@ -399,7 +399,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
         headers: 
          { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
           'Cache-Control': 'no-cache',
-           Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+           Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
           'Content-type': 'application/json; charset=utf-8' },
           body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "' + text + '"\n}'
           
@@ -430,7 +430,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
                       headers: 
                        { 'Postman-Token': '39ba5087-93c0-481e-373c-156d871943af',
                         'Cache-Control': 'no-cache',
-                         Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                         Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                         'Content-type': 'application/json; charset=utf-8' },
                         body: '{\n\t"toPersonId": "' + myId + '" ,\n\t"text": "' + feedback + '"\n}' };
 
@@ -449,7 +449,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
                             headers: 
                              { 'Postman-Token': '639ad82b-177a-6fcb-a26b-540f1b1331b2',
                                'Cache-Control': 'no-cache',
-                               Authorization: 'Bearer NDUwNDhhMDMtNmZlNC00NjZjLWI5MzAtN2NiNzZmMDNiMjViNDVjOWQ0NzAtMmQ5',
+                               Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                               'Content-type': 'application/json; charset=utf-8' } };
 
                             rp(options0)
