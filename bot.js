@@ -26,6 +26,7 @@ var requesterId = "";
 var yesCount = 0;
 var noCount = 0;
 
+
 var bannedEmail1 = "spark-cisco-it-admin-bot@cisco.com";
 var bannedEmail2 = "happyscheduler@sparkbot.io";
 
@@ -64,6 +65,17 @@ controller.hears('^hi', 'direct_message,direct_mention', function (bot, message)
 
 
 controller.hears('-start *', ['direct_message','direct_mention','mention'], function (bot, message) {
+
+    activity = "";
+    spaceId = "";
+    memberIDList = [];
+    memberNameList = [];
+    webHookList = [];
+    alternativesList = [];
+    requesterId = "";
+    yesCount = 0;
+    noCount = 0;
+
 
     //var toJson = JSON.parse(message);
     var rp = require('request-promise');
@@ -148,13 +160,14 @@ function createWebHooks(){
               'Cache-Control': 'no-cache',
               Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://sybot.herokuapp.com/",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
+              body: '{\n\t"name": "' + memberNameList[z] + '",\n\t"targetUrl": "https://yuenyuen.localtunnel.me",\n\t"resource": "messages",\n\t"event": "created",\n\t"filter": "personId=' + memberIDList[z] + '"\n}' };
     
     console.log(options2);
     rp(options2)
         .then(function (parsedBody){
             var tempJson = JSON.parse(parsedBody);
             webHookList.push(tempJson.id);
+
 
         }).catch(function (err){
                 console.log(err);
@@ -280,7 +293,7 @@ function checkVotingStatus(forcedQuit){
               'Cache-Control': 'no-cache',
                Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
               'Content-type': 'application/json; charset=utf-8' },
-              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + ' says YES!"\n}' };
+              body: '{\n\t"roomId": "' + spaceId + '",\n\t"text": "Voting completed! ' + yesCount + ' says YES! and ' + noCount + ' have said NO! \n}' };
 
 
 
@@ -364,6 +377,8 @@ function checkVotingStatus(forcedQuit){
                 yesCount = 0;
                 noCount = 0;
 
+
+
             }).catch(function (err){
                 console.log(err);
             });
@@ -390,7 +405,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
     if (curCount == 0 ){
         text = "Voting have stopped. I'm sorry, your team is busy and have not responded yet.";
     }else{
-        text = "Voting have stopped. " + curCount + " of your team members have responded and " + yesCount + " have said YES!";
+        text = "Voting have stopped. " + curCount + " of your team members have responded and " + yesCount + " have said YES! and " + noCount + " have said NO!";
     }
 
 
@@ -473,6 +488,9 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
         });
 
     // Clearing variables
+
+
+
     activity = "";
     spaceId = "";
     memberIDList = [];
