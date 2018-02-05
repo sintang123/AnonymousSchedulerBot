@@ -80,7 +80,8 @@ controller.hears('-start *', ['direct_message','direct_mention','mention'], func
     //var toJson = JSON.parse(message);
     var rp = require('request-promise');
 
-    requesterId = message.raw_message.data.personId;;
+    //requesterId = message.raw_message.data.personId;;
+    requesterId = " ";
 
     activityDetails = message.text.substr(message.text.indexOf(" ") + 1);
 
