@@ -1,3 +1,29 @@
+#Happy Scheduler Bot Commands#
+
+##hi##
+- Display the function of the bot and what commands are required to get started
+
+##-start <activities>##
+- To initiate the process of votes collection. 
+- Bot will initiate a conversation with each member of your team individually to ask them for their votes/feedback
+  - The team member who uses the command will not be able to vote or provide feedback
+- Once all members have put in their votes/feedback, the voting process will end
+  
+###-yes###
+- Team member can indiate in the personal chat that he/she votes YES
+
+###-no <feedback>###
+- Team member can indiate in the personal chat that he/she votes NO
+- Team member can also provide his/her feedback on how to better improve the activity plan
+
+##-quit##
+- To stop the votes collection process and tabulate the results immediately
+
+
+
+
+
+
 # Botkit Starter Kit for Cisco Spark Bots
 
 This repo contains everything you need to get started building a Cisco Spark bot with [Botkit](https://botkit.ai) and [Botkit Studio](https://botkit.ai).
