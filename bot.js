@@ -508,7 +508,7 @@ controller.hears('-quit', ['direct_message','direct_mention','mention'], functio
                         'Cache-Control': 'no-cache',
                          Authorization: 'Bearer ZWQ5MDA3ZWItYWJmYi00NTY3LWFhMmUtNzI4NWFmNjFkZGU1MzA0ZWU0MWUtMmVk',
                         'Content-type': 'application/json; charset=utf-8' },
-                        body: '{\n\t"toPersonId": "' + myId + '" ,\n\t"text": "sad"\n}' };
+                        body: '{\n\t"toPersonId": "' + myId + '" ,\n\t"text": "' + feedback + '"\n}' };
 
 
               console.log("HeyHEY : " + options4.headers.body);
