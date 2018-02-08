@@ -63,13 +63,6 @@ controller.hears('^hi', 'direct_message,direct_mention', function (bot, message)
 
 });
 
-controller.hears('-help', 'direct_message,direct_mention', function (bot, message) {
-    console.log(message);
-
-    bot.reply(message, 'Welcome! \n\n I am Anonymous Scheduler Bot. I can help you to get a sensing of how much your team is available for an upcoming activity that you might have in mind. \n\n My commands are simple to use, only **1** command is needed to get immediately start gathering feedback.\n\n- @myname -start [activity_details]');
-
-});
-
 
 
 controller.hears('-start *', ['direct_message','direct_mention','mention'], function (bot, message) {
